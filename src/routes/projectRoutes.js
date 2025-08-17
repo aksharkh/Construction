@@ -1,5 +1,5 @@
 import express from "express";
-import { createProject, getAllProjects } from "../controllers/projectController.js";
+import { createProject, getAllProjects, getProjectById } from "../controllers/projectController.js";
 import { body } from "express-validator";
 import { authorize, protect } from "../middlewares/authMiddleware.js";
 

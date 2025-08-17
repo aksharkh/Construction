@@ -1,6 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import { authorize, protect } from "../middlewares/authMiddleware.js";
+import { createMilestone, getMilestonesForProject } from "../controllers/milestoneController.js";
 
 
 const router = express.Router();
