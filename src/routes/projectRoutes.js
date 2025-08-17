@@ -18,6 +18,6 @@ router.route("/")
     .get(protect, authorize("Contractor", "Project Manager"), getAllProjects);
 
 router.route("/:id")
-    .get(Project, getProjectById);
+    .get(protect, getProjectById);
 
 export default router;
