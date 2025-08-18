@@ -14,7 +14,7 @@ export const submitBid = async (req, res) => {
             });
         }
 
-        if(project.status !== "Pending") {
+        if(project.status !== "Planning") {
             return res.status(400).json({
                 message: "This project is not currently accepting bids."
         });

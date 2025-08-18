@@ -1,0 +1,40 @@
+# Use spaces, not tabs, for indentation
+
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: construction-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=${PORT}
+    depends_on:
+      db: # Indented with 2 spaces
+        condition: service_healthy # Indented with 4 spaces
+
+  db:
+    image: postgres:14-alpine
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck: # Indented with 2 spaces
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"] # Indented with 4 spaces
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

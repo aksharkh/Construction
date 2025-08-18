@@ -1,13 +1,13 @@
-import { Milestone, Project } from "../models/index.js";
+import { Milestone, Project, User, Bid } from "../models/index.js";
 
 
 
 export const createProject = async ( req, res) => {
-    const { titile, description, location} = req.body;
+    const { title, description, location} = req.body;
 
     try{
         const project = await Project.create({
-            titile,
+            title,
             description,
             location,
             homeownerId: req.user.id,
@@ -51,7 +51,7 @@ export const getAllProjects = async (req, res) => {
 export const getProjectById = async (req, res) => {
     try {
         const project = await Project.findByPk(req.params.id, {
-            inclede: [
+            include: [
                 {model: User, as: "homeowner", attributes: ["name", "email"]},
                 {
                     model: Bid,
