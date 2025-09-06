@@ -133,3 +133,55 @@ The application is configured for deployment to the AWS Elastic Beanstalk Docker
     * `PORT`: `8080`.
 7.  **Test**: The application will be live at the URL provided by Elastic Beanstalk.
 8.  **Cleanup**: Terminate the Elastic Beanstalk environment and delete the RDS instance to avoid any charges.
+
+
+## Entity-Relationship (ER) Model Overview
+
+The API is built around four core models with the following relationships:
+
+* **User & Project**: A `User` (as a 'Homeowner') has a **one-to-many** relationship with `Projects`.
+* **User & Bid**: A `User` (as a 'Contractor') has a **one-to-many** relationship with `Bids`.
+* **Project & Bid**: A `Project` has a **one-to-many** relationship with `Bids`.
+* **Project & Milestone**: A `Project` has a **one-to-many** relationship with `Milestones`.
+
+```mermaid
+erDiagram
+    USER {
+        UUID id PK
+        string name
+        string email
+        string role
+    }
+    PROJECT {
+        UUID id PK
+        string title
+        string description
+        string location
+    }
+    BID {
+        UUID id PK
+        DECIMAL price
+        string estimatedDuration
+    }
+    MILESTONE {
+        UUID id PK
+        string name
+        string description
+    }
+
+    USER ||--o{ PROJECT : "creates"
+    USER ||--o{ BID : "submits"
+    PROJECT ||--o{ BID : "has"
+    PROJECT ||--o{ MILESTONE : "has"
+
+    %% Style Definitions for Colors
+    classDef userStyle fill:#bde0fe,stroke:#264653,stroke-width:2px,color:#333
+    classDef projectStyle fill:#cce5cc,stroke:#2a9d8f,stroke-width:2px,color:#333
+    classDef bidStyle fill:#fff3b0,stroke:#e76f51,stroke-width:2px,color:#333
+    classDef milestoneStyle fill:#e6ccff,stroke:#8338ec,stroke-width:2px,color:#333
+
+    %% Applying Styles to Entities
+    class USER userStyle
+    class PROJECT projectStyle
+    class BID bidStyle
+    class MILESTONE milestoneStyle
